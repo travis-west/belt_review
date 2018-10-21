@@ -19,5 +19,5 @@ from django.conf.urls import url,include
 urlpatterns = [
     url(r'^', include('apps.review_app.urls')), 
         url(r'^users/', include('apps.review_app.urls')),
-        #url(r'^reviews/', include('apps.courses_app.urls')),
+        url(r'^reviews/', include('apps.books_app.urls')),
 ]

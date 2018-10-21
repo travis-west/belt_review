@@ -50,7 +50,7 @@ def create(request):
         request.session.clear()
         request.session['user_id'] = new_user.id
 
-        return render(request, 'review_app/debug.html')
+        return redirect('/reviews/')
 
 
 def reset(request):
