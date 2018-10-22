@@ -16,14 +16,12 @@ def create(request):
     request.session['email_address'] = request.POST['email_address']
     request.session['alias'] = request.POST['alias']
 
-
     ### check on duplicate email address
     if User.objects.filter(email_address = request.POST['email_address']):
         messages.add_message(
             request, messages.ERROR,
             'This email address is already in use.  Please log in.'
         )
-
         return redirect('/')
 
     ### validate the form submission
@@ -32,8 +30,8 @@ def create(request):
         # if the errors object contains anything, loop through each key-value pair and make a flash message
         for key, value in errors.items():
             messages.error(request, value)
-
         return redirect('/')
+
     #create the user record        
     else:
         #hash the password
@@ -50,8 +48,31 @@ def create(request):
         request.session.clear()
         request.session['user_id'] = new_user.id
 
-        return redirect('/reviews/')
+        return redirect('/reviews')
 
+def login(request):
+    #get the user record from the email address
+    try:
+        user = User.objects.get(email_address = request.POST['email_address'])
+        if bcrypt.checkpw(request.POST['password'].encode(), user.password.encode()):
+
+            request.session.clear()
+            request.session['user_id'] = user.id
+            return redirect('/reviews')
+        else:
+            #showing them that just the password was wrong is a bad practice, but I want to see for now.
+            messages.add_message(
+                request, messages.ERROR,
+                'Invalid password.  Please try again.'
+            )
+            # then redirect to the login page.
+            return redirect('/')
+    except:
+        messages.add_message(
+            request, messages.ERROR,
+            'Invalid username.  Please try again.'
+        )    
+        return redirect('/')
 
 def reset(request):
     request.session.clear()

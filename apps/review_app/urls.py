@@ -9,5 +9,6 @@ urlpatterns = [
     #url(r'^update', views.update),
     #url(r'^new', views.new), 
     url(r'^reset', views.reset), 
+    url(r'^login', views.login), 
     url(r'^$', views.index)
 ]

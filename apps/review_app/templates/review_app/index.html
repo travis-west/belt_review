@@ -100,8 +100,9 @@
             <div class="form-box">
                 <h3>log-in</h3>
                 <form action="/login" method="POST">
+                    {% csrf_token %}
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="" name="email">
+                        <input type="text" class="form-control" placeholder="" name="email_address">
                         <div class="input-group-append">
                             <span class="input-group-text">email</span>
                         </div>
